@@ -143,7 +143,7 @@ if st.session_state['authenticated'] and not st.session_state['reset_mode']:
             await browser.close()
 
     # Streamlit UI
-    st.title("Chapter PDF Generator")
+    st.title("Play PDF Generator")
 
     # Dynamic list to store chapter inputs
     chapter_texts = []

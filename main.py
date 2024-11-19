@@ -26,7 +26,7 @@ def get_response(chapter, font_size, lineheight):
   if len(chapter) <= max_chars:
       prompt_template = """
     You are an expert book formatter.  
-    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7:
+    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7 and point 11:
     
     1. Paragraph Formatting 
        - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
@@ -95,7 +95,7 @@ def get_response(chapter, font_size, lineheight):
       second_part = chapter[split_pos + 1:]
       prompt_template_1 = """
     You are an expert book formatter.  
-    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7:
+    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7 and point 11:
     
     1. Paragraph Formatting 
        - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
@@ -228,8 +228,8 @@ def get_response(chapter, font_size, lineheight):
       third_part = chapter[split_pos_2 + 1:]
       prompt_template_1 = """
     You are an expert book formatter.  
-    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7:
-    
+    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7 and point 11:
+        
     1. Paragraph Formatting 
        - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
     
