@@ -13,7 +13,7 @@ from pypdf import PdfReader, PdfWriter
 def get_response(chapter, font_size, lineheight):
   
   # Set up OpenAI API client
-    
+  
   api_key = st.secrets["Openai_api"]
   client = OpenAI(
         # This is the default and can be omitted
@@ -22,70 +22,427 @@ def get_response(chapter, font_size, lineheight):
   
   # Set up OpenAI model and prompt
   model="gpt-4o-mini-2024-07-18"
-  prompt_template = """
-You are an expert book formatter.  
-This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7:
+  max_chars = 37000
+  if len(chapter) <= max_chars:
+      prompt_template = """
+    You are an expert book formatter.  
+    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7:
+    
+    1. Paragraph Formatting 
+       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
+    
+    2. Line Length 
+       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
+    
+    3. Line Spacing (Leading) 
+       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
+    
+    4. Margins 
+       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
+       - Left and right margins should be minimal to emulate a book-like layout.
+    
+    5. Consistency 
+       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
+    
+    6. Special Formatting  
+       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
+    
+    7. Plays 
+       - For plays, follow these conventions:  
+         a. Character names should be in uppercase and bold, left-aligned.  
+         b. Dialogue should be on the next line after the character name, indented by 2 em.  
+         c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+         d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
+    
+    8. Styling  
+       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
+    
+    9. Multilingual Words  
+       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
+    
+    10. Chapter Heading  
+       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
+       - Leave additional space between the chapter heading and the first paragraph.
+    
+    11. General Formatting  
+       - Avoid using inline styles wherever possible; rely on semantic tags.  
+       - Do not include anything else like ```html in the response. Start directly with the `<!DOCTYPE html>` line.
+    
+    12. Font size and line height
+       - Use fontsize as <<fontsize>>
+       - Use line height as <<lineheight>>
+       
+    Here is the target chapter: <<CHAPTER_TEXT>>
+    """
+      prompt = prompt_template.replace("<<CHAPTER_TEXT>>", chapter).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
+      chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            model=model,
+    	temperature = 0
+        )
+    
+      response = chat_completion.choices[0].message.content
+      return response
+  elif(len(chapter) > max_chars and len(chapter) <= 74000):
+      
+      split_pos = chapter.rfind('.', 0, max_chars)
+      first_part = chapter[:split_pos + 1]
+      second_part = chapter[split_pos + 1:]
+      prompt_template_1 = """
+    You are an expert book formatter.  
+    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7:
+    
+    1. Paragraph Formatting 
+       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
+    
+    2. Line Length 
+       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
+    
+    3. Line Spacing (Leading) 
+       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
+    
+    4. Margins 
+       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
+       - Left and right margins should be minimal to emulate a book-like layout.
+    
+    5. Consistency 
+       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
+    
+    6. Special Formatting  
+       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
+    
+    7. Plays 
+       - For plays, follow these conventions:  
+         a. Character names should be in uppercase and bold, left-aligned.  
+         b. Dialogue should be on the next line after the character name, indented by 2 em.  
+         c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+         d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
+    
+    8. Styling  
+       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
+    
+    9. Multilingual Words  
+       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
+    
+    10. Chapter Heading  
+       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
+       - Leave additional space between the chapter heading and the first paragraph.
+    
+    11. General Formatting  
+       - Avoid using inline styles wherever possible; rely on semantic tags.  
+       - Do not include anything else like ```html in the response. Start directly with the `<!DOCTYPE html>` line.
+    
+    12. Font size and line height
+       - Use fontsize as <<fontsize>>
+       - Use line height as <<lineheight>>
+       
+    Here is the target chapter: <<CHAPTER_TEXT>>
+    """
+      prompt_1 = prompt_template_1.replace("<<CHAPTER_TEXT>>", first_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
+      chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_1,
+                }
+            ],
+            model=model,
+    	temperature = 0
+        )
+    
+      response_1 = chat_completion.choices[0].message.content
+      prompt_template_2 = """
+        You are an expert book formatter.
+        Continue formatting the book chapter into HTML following the same styles as before. Do not include the <!DOCTYPE html> declaration, <html>, <head>, or <body> tags. Start directly with the paragraph tags and ensure consistency in formatting with the previous part.
+        Font size = <<fontsize>>
+        Line height = <<lineheight>>
+        Include these features in html:
+        1. Paragraph Formatting 
+       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
+    
+    2. Line Length 
+       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
+    
+    3. Line Spacing (Leading) 
+       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
+    
+    4. Margins 
+       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
+       - Left and right margins should be minimal to emulate a book-like layout.
+    
+    5. Consistency 
+       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
+    
+    6. Special Formatting  
+       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
+    
+    7. Plays 
+       - For plays, follow these conventions:  
+         a. Character names should be in uppercase and bold, left-aligned.  
+         b. Dialogue should be on the next line after the character name, indented by 2 em.  
+         c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+         d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
+    
+    8. Styling  
+       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
+    
+    9. Multilingual Words  
+       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
+    
+    10. Chapter Heading  
+       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
+       - Leave additional space between the chapter heading and the first paragraph.
 
-1. Paragraph Formatting 
-   - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
+        Here is the continuation of the chapter:
+        
+        <<CHAPTER_TEXT>>
+        """
+      prompt_2 = prompt_template_2.replace("<<CHAPTER_TEXT>>", second_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
+      chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_2,
+                }
+            ],
+            model=model,
+    	temperature = 0
+        )
+    
+      response_2 = chat_completion.choices[0].message.content
+      # Now, merge the two responses
+      # Extract the <body> content from the first response and append the second response
 
-2. Line Length 
-   - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
+      # Find the closing </body> and </html> tags in the first response
+      body_close_index = response_1.rfind("</body>")
+      html_close_index = response_1.rfind("</html>")
 
-3. Line Spacing (Leading) 
-   -*Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
+      if body_close_index != -1:
+          # Insert the second response before the closing </body> tag
+          merged_html = response_1[:body_close_index] + "\n" + response_2 + "\n" + response_1[body_close_index:]
+      elif html_close_index != -1:
+          # Insert before </html> if </body> is not found
+          merged_html = response_1[:html_close_index] + "\n" + response_2 + "\n" + response_1[html_close_index:]
+      else:
+          # If no closing tags are found, simply concatenate
+          merged_html = response_1 + "\n" + response_2
 
-4. Margins 
-   - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
-   - Left and right margins should be minimal to emulate a book-like layout.
+      return merged_html
+  
+  else:
+      # If the chapter exceeds the limit, split into two parts
+      split_pos_1 = chapter.rfind('.', 0, max_chars)
+      split_pos_2 = chapter.rfind('.', max_chars, 74000)
+      first_part = chapter[:split_pos_1 + 1]
+      second_part = chapter[split_pos_1 + 1 : split_pos_2 + 1]
+      third_part = chapter[split_pos_2 + 1:]
+      prompt_template_1 = """
+    You are an expert book formatter.  
+    This is a book chapter, which may include sections of a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML and pay special attention to point 7:
+    
+    1. Paragraph Formatting 
+       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
+    
+    2. Line Length 
+       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
+    
+    3. Line Spacing (Leading) 
+       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
+    
+    4. Margins 
+       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
+       - Left and right margins should be minimal to emulate a book-like layout.
+    
+    5. Consistency 
+       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
+    
+    6. Special Formatting  
+       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
+    
+    7. Plays 
+       - For plays, follow these conventions:  
+         a. Character names should be in uppercase and bold, left-aligned.  
+         b. Dialogue should be on the next line after the character name, indented by 2 em.  
+         c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+         d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
+    
+    8. Styling  
+       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
+    
+    9. Multilingual Words  
+       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
+    
+    10. Chapter Heading  
+       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
+       - Leave additional space between the chapter heading and the first paragraph.
+    
+    11. General Formatting  
+       - Avoid using inline styles wherever possible; rely on semantic tags.  
+       - Do not include anything else like ```html in the response. Start directly with the `<!DOCTYPE html>` line.
+    
+    12. Font size and line height
+       - Use fontsize as <<fontsize>>
+       - Use line height as <<lineheight>>
+       
+    Here is the target chapter: <<CHAPTER_TEXT>>
+    """
+      prompt_1 = prompt_template_1.replace("<<CHAPTER_TEXT>>", first_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
+      chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_1,
+                }
+            ],
+            model=model,
+    	temperature = 0
+        )
+    
+      response_1 = chat_completion.choices[0].message.content
+      prompt_template_2 = """
+        You are an expert book formatter.
+        Continue formatting the book chapter into HTML following the same styles as before. Do not include the <!DOCTYPE html> declaration, <html>, <head>, or <body> tags. Start directly with the paragraph tags and ensure consistency in formatting with the previous part.
+        Font size = <<fontsize>>
+        Line height = <<lineheight>>
+        Include these features in html:
+        1. Paragraph Formatting 
+       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
+    
+    2. Line Length 
+       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
+    
+    3. Line Spacing (Leading) 
+       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
+    
+    4. Margins 
+       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
+       - Left and right margins should be minimal to emulate a book-like layout.
+    
+    5. Consistency 
+       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
+    
+    6. Special Formatting  
+       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
+    
+    7. Plays 
+       - For plays, follow these conventions:  
+         a. Character names should be in uppercase and bold, left-aligned.  
+         b. Dialogue should be on the next line after the character name, indented by 2 em.  
+         c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+         d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
+    
+    8. Styling  
+       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
+    
+    9. Multilingual Words  
+       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
+    
+    10. Chapter Heading  
+       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
+       - Leave additional space between the chapter heading and the first paragraph.
 
-5. Consistency 
-   - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
+        Here is the continuation of the chapter:
+        
+        <<CHAPTER_TEXT>>
+        """
+      prompt_2 = prompt_template_2.replace("<<CHAPTER_TEXT>>", second_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
+      chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_2,
+                }
+            ],
+            model=model,
+    	temperature = 0
+        )
+    
+      response_2 = chat_completion.choices[0].message.content
 
-6. Special Formatting  
-   - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
+      prompt_template_3 = """
+        You are an expert book formatter.
+        Continue formatting the book chapter into HTML following the same styles as before. Do not include the <!DOCTYPE html> declaration, <html>, <head>, or <body> tags. Start directly with the paragraph tags and ensure consistency in formatting with the previous part.
+        Font size = <<fontsize>>
+        Line height = <<lineheight>>
+        Include these features in html:
+        1. Paragraph Formatting 
+       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
+    
+    2. Line Length 
+       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
+    
+    3. Line Spacing (Leading) 
+       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
+    
+    4. Margins 
+       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
+       - Left and right margins should be minimal to emulate a book-like layout.
+    
+    5. Consistency 
+       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
+    
+    6. Special Formatting  
+       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
+    
+    7. Plays 
+       - For plays, follow these conventions:  
+         a. Character names should be in uppercase and bold, left-aligned.  
+         b. Dialogue should be on the next line after the character name, indented by 2 em.  
+         c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+         d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
+    
+    8. Styling  
+       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
+    
+    9. Multilingual Words  
+       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
+    
+    10. Chapter Heading  
+       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
+       - Leave additional space between the chapter heading and the first paragraph.
 
-7. Plays 
-   - For plays, follow these conventions:  
-     a. Character names should be in uppercase and bold, left-aligned.  
-     b. Dialogue should be on the next line after the character name, indented by 2 em.  
-     c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
-     d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
+        Here is the continuation of the chapter:
+        
+        <<CHAPTER_TEXT>>
+        """
+      prompt_3 = prompt_template_3.replace("<<CHAPTER_TEXT>>", third_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
+      chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_3,
+                }
+            ],
+            model=model,
+    	temperature = 0
+        )
+    
+      response_3 = chat_completion.choices[0].message.content
 
-8. Styling  
-   - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
+      # Now, merge the two responses
+      # Extract the <body> content from the first response and append the second response
+  
+      # Find the closing </body> and </html> tags in the first response
+      body_close_index = response_1.rfind("</body>")
+      html_close_index = response_1.rfind("</html>")
+  
+      if body_close_index != -1:
+      # Insert the second response before the closing </body> tag
+          merged_html = response_1[:body_close_index] + "\n" + response_2 + "\n" + response_3 + "\n" + response_1[body_close_index:]
+      elif html_close_index != -1:
+      # Insert before </html> if </body> is not found
+          merged_html = response_1[:html_close_index] + "\n" + response_2 + "\n" + response_3 + "\n" + response_1[html_close_index:]
+      else:
+          # If no closing tags are found, simply concatenate
+          merged_html = response_1 + "\n" + response_2 + "\n" + response_3
+  
+      return merged_html
 
-9. Multilingual Words  
-   - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
-
-10. Chapter Heading  
-   - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
-   - Leave additional space between the chapter heading and the first paragraph.
-
-11. General Formatting  
-   - Avoid using inline styles wherever possible; rely on semantic tags.  
-   - Do not include anything else like ```html in the response. Start directly with the `<!DOCTYPE html>` line.
-
-12. Font size and line height
-   - Use fontsize as <<fontsize>>
-   - Use line height as <<lineheight>>
-   
-Here is the target chapter: <<CHAPTER_TEXT>>
-"""
-  prompt = prompt_template.replace("<<CHAPTER_TEXT>>", chapter).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
-  chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": prompt,
-            }
-        ],
-        model=model,
-	temperature = 0
-    )
-
-  response = chat_completion.choices[0].message.content
-  return response
 
 def save_response(response):
     html_pth = 'neww.html'
