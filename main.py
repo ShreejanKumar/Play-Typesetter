@@ -162,44 +162,29 @@ def get_response(chapter, font_size, lineheight):
         Font size = <<fontsize>>
         Line height = <<lineheight>>
         Include these features in html:
-        1. Paragraph Formatting 
-       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
-    
-    2. Line Length 
-       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
-    
-    3. Line Spacing (Leading) 
-       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
-    
-    4. Margins 
-       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
-       - Left and right margins should be minimal to emulate a book-like layout.
-    
-    5. Consistency 
-       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
-    
-    6. Special Formatting  
-       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
-    
-    7. Plays 
-       - For plays, follow these conventions:  
+        1. Paragraph Formatting
+        Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for a larger spacing between paragraphs if not using indentation.
+        2. Line Length
+        Optimal Line Length: Aim for 50-75 characters per line (including spaces). Lines that are too long or too short can make reading difficult.
+        3.Line Spacing (Leading)
+        Comfortable Reading: The line spacing should be the same as given in the example.
+        4. Proper margins and spaces. The top and Bottom margin for paragraph tag should be 0.1 and 0.2em.
+        8. Left and Right margins are minimum so the pdf looks like a book.
+        7.  Consistency
+        Uniformity: Maintain consistent styles for similar elements (e.g., headings, captions, and block quotes) throughout the book.
+        8. format special segments correctly and similarly such as a poetry, quotes or exclamatory expressions etc (use italics ) for them
+        9. Use various of html tags like heading bold etc wherever suitable but dont use colours for text
+        Keep this in mind : Left and Right margins are minimum.
+        10. Do not write anything else like ```html in the response, directly start with the paragraph tags.
+        11. No need to bold names and use italics for even single words in sentences that are in other languages like Hindi or spanish.
+        12. Plays 
+            - For plays, follow these conventions:  
          a. Character names should be in uppercase and bold, left-aligned.  
          b. Dialogue should be on the next line after the character name, indented by 2 em.  
          c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
          d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
-    
-    8. Styling  
-       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
-    
-    9. Multilingual Words  
-       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
-    
-    10. Chapter Heading  
-       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
-       - Leave additional space between the chapter heading and the first paragraph.
 
         Here is the continuation of the chapter:
-        
         <<CHAPTER_TEXT>>
         """
       prompt_2 = prompt_template_2.replace("<<CHAPTER_TEXT>>", second_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
@@ -310,44 +295,29 @@ def get_response(chapter, font_size, lineheight):
         Font size = <<fontsize>>
         Line height = <<lineheight>>
         Include these features in html:
-        1. Paragraph Formatting 
-       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
-    
-    2. Line Length 
-       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
-    
-    3. Line Spacing (Leading) 
-       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
-    
-    4. Margins 
-       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
-       - Left and right margins should be minimal to emulate a book-like layout.
-    
-    5. Consistency 
-       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
-    
-    6. Special Formatting  
-       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
-    
-    7. Plays 
-       - For plays, follow these conventions:  
+        1. Paragraph Formatting
+        Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for a larger spacing between paragraphs if not using indentation.
+        2. Line Length
+        Optimal Line Length: Aim for 50-75 characters per line (including spaces). Lines that are too long or too short can make reading difficult.
+        3.Line Spacing (Leading)
+        Comfortable Reading: The line spacing should be the same as given in the example.
+        4. Proper margins and spaces. The top and Bottom margin for paragraph tag should be 0.1 and 0.2em.
+        8. Left and Right margins are minimum so the pdf looks like a book.
+        7.  Consistency
+        Uniformity: Maintain consistent styles for similar elements (e.g., headings, captions, and block quotes) throughout the book.
+        8. format special segments correctly and similarly such as a poetry, quotes or exclamatory expressions etc (use italics ) for them
+        9. Use various of html tags like heading bold etc wherever suitable but dont use colours for text
+        Keep this in mind : Left and Right margins are minimum.
+        10. Do not write anything else like ```html in the response, directly start with the paragraph tags.
+        11. No need to bold names and use italics for even single words in sentences that are in other languages like Hindi or spanish.
+        12. Plays 
+            - For plays, follow these conventions:  
          a. Character names should be in uppercase and bold, left-aligned.  
          b. Dialogue should be on the next line after the character name, indented by 2 em.  
          c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
          d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
-    
-    8. Styling  
-       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
-    
-    9. Multilingual Words  
-       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
-    
-    10. Chapter Heading  
-       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
-       - Leave additional space between the chapter heading and the first paragraph.
 
         Here is the continuation of the chapter:
-        
         <<CHAPTER_TEXT>>
         """
       prompt_2 = prompt_template_2.replace("<<CHAPTER_TEXT>>", second_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
@@ -370,44 +340,29 @@ def get_response(chapter, font_size, lineheight):
         Font size = <<fontsize>>
         Line height = <<lineheight>>
         Include these features in html:
-        1. Paragraph Formatting 
-       - Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for larger spacing between paragraphs if not using indentation.
-    
-    2. Line Length 
-       - Optimal Line Length: Aim for 50-75 characters per line (including spaces). Ensure a comfortable reading experience.
-    
-    3. Line Spacing (Leading) 
-       -Comfortable Reading: Set line spacing (leading) to around 120-145% of the font size.
-    
-    4. Margins 
-       - Top and bottom margins for paragraphs should be 0.1em and 0.2em, respectively.  
-       - Left and right margins should be minimal to emulate a book-like layout.
-    
-    5. Consistency 
-       - Ensure uniform styles for similar elements (e.g., headings, captions, block quotes) throughout.
-    
-    6. Special Formatting  
-       - Format special segments (e.g., poetry, quotes, or exclamatory expressions) appropriately using italics.  
-    
-    7. Plays 
-       - For plays, follow these conventions:  
+        1. Paragraph Formatting
+        Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for a larger spacing between paragraphs if not using indentation.
+        2. Line Length
+        Optimal Line Length: Aim for 50-75 characters per line (including spaces). Lines that are too long or too short can make reading difficult.
+        3.Line Spacing (Leading)
+        Comfortable Reading: The line spacing should be the same as given in the example.
+        4. Proper margins and spaces. The top and Bottom margin for paragraph tag should be 0.1 and 0.2em.
+        8. Left and Right margins are minimum so the pdf looks like a book.
+        7.  Consistency
+        Uniformity: Maintain consistent styles for similar elements (e.g., headings, captions, and block quotes) throughout the book.
+        8. format special segments correctly and similarly such as a poetry, quotes or exclamatory expressions etc (use italics ) for them
+        9. Use various of html tags like heading bold etc wherever suitable but dont use colours for text
+        Keep this in mind : Left and Right margins are minimum.
+        10. Do not write anything else like ```html in the response, directly start with the paragraph tags.
+        11. No need to bold names and use italics for even single words in sentences that are in other languages like Hindi or spanish.
+        12. Plays 
+            - For plays, follow these conventions:  
          a. Character names should be in uppercase and bold, left-aligned.  
          b. Dialogue should be on the next line after the character name, indented by 2 em.  
          c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
          d. The chapter names can be in the form of Acts. Format them as we format chapter titles.
-    
-    8. Styling  
-       - Use various HTML tags (e.g., headings, bold, italics) as needed, but do not use colors for text.  
-    
-    9. Multilingual Words  
-       - Single words in other languages (e.g., Hindi or Spanish) should be italicized.  
-    
-    10. Chapter Heading  
-       - The chapter heading should be centrally aligned and start at the one-fourth level of a new page, with extra margin on the top.  
-       - Leave additional space between the chapter heading and the first paragraph.
 
         Here is the continuation of the chapter:
-        
         <<CHAPTER_TEXT>>
         """
       prompt_3 = prompt_template_3.replace("<<CHAPTER_TEXT>>", third_part).replace("<<fontsize>>", font_size + "px").replace("<<lineheight>>", lineheight)
