@@ -143,7 +143,7 @@ if st.session_state['authenticated'] and not st.session_state['reset_mode']:
             await browser.close()
 
     # Streamlit UI
-    st.title("Chapter PDF Generator")
+    st.title("Play PDF Generator")
 
     # Dynamic list to store chapter inputs
     chapter_texts = []
@@ -180,7 +180,7 @@ if st.session_state['authenticated'] and not st.session_state['reset_mode']:
         current_position = first_page_position  # "Right" or "Left" based on input
 
         for idx, chapter_text in enumerate(chapter_texts):
-            response = get_response(chapter_text, font_size, line_height)
+            response = get_response(chapter_text, font_size, line_height, font_style)
             html_pth = save_response(response)
 
             main_pdf = f'out_{idx+1}.pdf'
