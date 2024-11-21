@@ -91,7 +91,7 @@ def get_response(chapter, font_size, lineheight, fontstyle):
       split_pos = chapter.rfind('.', 0, max_chars)
       first_part = chapter[:split_pos + 1]
       second_part = chapter[split_pos + 1:]
-      st.write(second_part)
+      # st.write(second_part)
       prompt_template_1 = """
     You are an expert book formatter.  
     This is a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML:
@@ -223,9 +223,9 @@ def get_response(chapter, font_size, lineheight, fontstyle):
       first_part = chapter[:split_pos_1 + 1]
       second_part = chapter[split_pos_1 + 1 : split_pos_2 + 1]
       third_part = chapter[split_pos_2 + 1:]
-      st.write(second_part)
-      st.write("THIRD PART")
-      st.write(third_part)
+      # st.write(second_part)
+      # st.write("THIRD PART")
+      # st.write(third_part)
       prompt_template_1 = """
     You are an expert book formatter.  
     This is a play. Your job is to output a typeset file (USING HTML) which can be converted to a PDF book. Ensure the content is beautifully formatted, adhering to all rules of book formatting, and easily readable in a web browser. Include these features in HTML:
