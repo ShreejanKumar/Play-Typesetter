@@ -160,8 +160,11 @@ def get_response(chapter, font_size, lineheight, fontstyle):
         Line height = <<lineheight>>
         Use Fonts style <<fontstyle>>
         Include these features in html:
-        1. Paragraph Formatting
-        Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for a larger spacing between paragraphs if not using indentation.
+        1. For plays, follow these conventions:  
+             a. Character names should be in uppercase and bold, left-aligned.  
+             b. Dialogue should be on the next line after the character name, indented by 2 em.  
+             c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+             d. The chapter names can be in the form of Acts. Format them as we format chapter titles and maintan consistent formatting across all chapters.
         2. Line Length
         Optimal Line Length: Aim for 50-75 characters per line (including spaces). Lines that are too long or too short can make reading difficult.
         3.Line Spacing (Leading)
@@ -174,12 +177,6 @@ def get_response(chapter, font_size, lineheight, fontstyle):
         9. Use various of html tags like heading bold etc wherever suitable but dont use colours for text
         Keep this in mind : Left and Right margins are minimum.
         10. Do not write anything else like ```html in the response, directly start with the paragraph tags.
-        11. No need to bold names and use italics for even single words in sentences that are in other languages like Hindi or spanish.
-        12. For plays, follow these conventions:  
-             a. Character names should be in uppercase and bold, left-aligned.  
-             b. Dialogue should be on the next line after the character name, indented by 2 em.  
-             c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
-             d. The chapter names can be in the form of Acts. Format them as we format chapter titles and maintan consistent formatting across all chapters.
 
         Here is the continuation of the chapter:
         <<CHAPTER_TEXT>>
@@ -294,8 +291,11 @@ def get_response(chapter, font_size, lineheight, fontstyle):
         Line height = <<lineheight>>
         Use Fonts style <<fontstyle>>
         Include these features in html:
-        1. Paragraph Formatting
-        Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for a larger spacing between paragraphs if not using indentation.
+        1. For plays, follow these conventions:  
+             a. Character names should be in uppercase and bold, left-aligned.  
+             b. Dialogue should be on the next line after the character name, indented by 2 em.  
+             c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+             d. The chapter names can be in the form of Acts. Format them as we format chapter titles and maintan consistent formatting across all chapters.
         2. Line Length
         Optimal Line Length: Aim for 50-75 characters per line (including spaces). Lines that are too long or too short can make reading difficult.
         3.Line Spacing (Leading)
@@ -308,12 +308,6 @@ def get_response(chapter, font_size, lineheight, fontstyle):
         9. Use various of html tags like heading bold etc wherever suitable but dont use colours for text
         Keep this in mind : Left and Right margins are minimum.
         10. Do not write anything else like ```html in the response, directly start with the paragraph tags.
-        11. No need to bold names and use italics for even single words in sentences that are in other languages like Hindi or spanish.
-        12. For plays, follow these conventions:  
-             a. Character names should be in uppercase and bold, left-aligned.  
-             b. Dialogue should be on the next line after the character name, indented by 2 em.  
-             c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
-             d. The chapter names can be in the form of Acts. Format them as we format chapter titles and maintan consistent formatting across all chapters.
 
         Here is the continuation of the chapter:
         <<CHAPTER_TEXT>>
@@ -339,8 +333,11 @@ def get_response(chapter, font_size, lineheight, fontstyle):
         Line height = <<lineheight>>
         Use Fonts style <<fontstyle>>
         Include these features in html:
-        1. Paragraph Formatting
-        Indentation: Use a small indent (about 1 em) for the first line of each paragraph, or opt for a larger spacing between paragraphs if not using indentation.
+        1. For plays, follow these conventions:  
+             a. Character names should be in uppercase and bold, left-aligned.  
+             b. Dialogue should be on the next line after the character name, indented by 2 em.  
+             c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
+             d. The chapter names can be in the form of Acts. Format them as we format chapter titles and maintan consistent formatting across all chapters.
         2. Line Length
         Optimal Line Length: Aim for 50-75 characters per line (including spaces). Lines that are too long or too short can make reading difficult.
         3.Line Spacing (Leading)
@@ -353,13 +350,7 @@ def get_response(chapter, font_size, lineheight, fontstyle):
         9. Use various of html tags like heading bold etc wherever suitable but dont use colours for text
         Keep this in mind : Left and Right margins are minimum.
         10. Do not write anything else like ```html in the response, directly start with the paragraph tags.
-        11. No need to bold names and use italics for even single words in sentences that are in other languages like Hindi or spanish.
-        12. For plays, follow these conventions:  
-             a. Character names should be in uppercase and bold, left-aligned.  
-             b. Dialogue should be on the next line after the character name, indented by 2 em.  
-             c. Stage directions or actions should always be in italics, enclosed in parentheses, and indented similarly.
-             d. The chapter names can be in the form of Acts. Format them as we format chapter titles and maintan consistent formatting across all chapters.
-             
+
         Here is the continuation of the chapter:
         <<CHAPTER_TEXT>>
         """
